@@ -1,12 +1,7 @@
-export const modelSalesProducts = (sequelize, DataTypes) => {
+const salesProductsModel = (sequelize, DataTypes) => {
   const SalesProducts = sequelize.define('SalesProduct', { 
-    saleId: DataTypes.INTEGER,
-    productId: DataTypes.INTEGER,
-    quantity: DataTypes.INTEGER,
-  }, { 
-    timestamps: false,
-    underscored: true,
-  });
+    saleId: DataTypes.INTEGER, productId: DataTypes.INTEGER, quantity: DataTypes.INTEGER,
+  }, { timestamps: false, underscored: true });
 
   SalesProducts.associate = (models) => {
     models.Sales.belongsToMany(models.Products, {
@@ -24,3 +19,5 @@ export const modelSalesProducts = (sequelize, DataTypes) => {
   };
   return SalesProducts;
 };
+
+export default salesProductsModel;

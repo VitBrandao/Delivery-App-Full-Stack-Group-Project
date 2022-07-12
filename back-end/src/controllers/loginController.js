@@ -1,18 +1,16 @@
-const { login } = require('../services/loginService');
+const login = require('../services/loginService');
+const token = require('../services/generateToken');
 
-// const { login } = require('../services/loginService');
-// const token = require('../services/generateToken');
+const loginController = async (req, res, _next) => {
+  const { body } = req;
+  try {
+    const loginInfos = await login(body);
+    console.log(loginInfos);
+    const { email, name, role } = loginInfos;
+    return res.status(200).json({ name, email, role, token: token(loginInfos.email) });
+  } catch (err) {
+    return res.status(500).json(console.log(err));
+  }
+};
 
-// const loginController = async (req, res, _next) => {
-//   const { email } = req.body;
-//   try {
-//     const loginInfos = await login({ email });
-//     return res.status(200).json({ token: token(loginInfos.id) });
-//   } catch (err) {
-//     return res.status(500).json(err);
-//   }
-// };
-
-// module.exports = {
-//   loginController,
-// };
+module.exports = loginController;

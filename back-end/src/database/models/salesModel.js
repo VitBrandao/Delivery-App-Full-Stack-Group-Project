@@ -7,7 +7,7 @@ const salesModel = (sequelize, DataTypes) => {
     deliveryNumber: DataTypes.STRING,
     saleDate: DataTypes.DATE,
     status: DataTypes.STRING,
-  }, { timestamps: false, underscored: true });
+  }, { timestamps: true, underscored: true });
 
   Sale.associate = (models) => {
     Sale.belongsTo(models.user, {

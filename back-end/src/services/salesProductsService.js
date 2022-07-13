@@ -1,7 +1,7 @@
-const { salesProduct, sale, product } =  require('../database/models');
+const { salesProduct, sale, product } = require('../database/models');
 
 const getBySaleId = async (id) => {
-  const saleProductById = await salesProduct.findOne({ where: { sale_id: id }}, {
+  const saleProductById = await salesProduct.findOne({ where: { saleId: id } }, {
     include: [
       { 
         model: sale,
@@ -9,11 +9,11 @@ const getBySaleId = async (id) => {
       },
       {
         model: product,
-        as: 'product'
-      }
-    ]
+        as: 'product',
+      },
+    ],
   });
   return saleProductById;
-}
+};
 
 module.exports = { getBySaleId };

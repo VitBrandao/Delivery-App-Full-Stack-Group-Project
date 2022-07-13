@@ -1,5 +1,5 @@
 const productsModel = (sequelize, DataTypes) => {
-  const Products = sequelize.define('Products', {
+  const Products = sequelize.define('product', {
     name: DataTypes.STRING,
     price: DataTypes.DECIMAL,
     urlImage: DataTypes.STRING,
@@ -11,4 +11,4 @@ const productsModel = (sequelize, DataTypes) => {
   return Products;
 };
 
-export default productsModel;
+module.exports = productsModel;

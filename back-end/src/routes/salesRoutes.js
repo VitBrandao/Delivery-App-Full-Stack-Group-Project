@@ -1,7 +1,8 @@
-/* const { Router } = require('express');
+const { Router } = require('express');
+const salesController = require('../controllers/salesController');
 
 const router = Router();
 
-router.post('/sales');
+router.post('/sales', salesController);
 
-module.exports = router; */
+module.exports = router;

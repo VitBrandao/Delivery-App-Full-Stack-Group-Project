@@ -10,4 +10,13 @@ const register = async ({ name, email, password }) => {
   return userRegister;
 };
 
-module.exports = register;
+const registerByAdmin = async ({ name, email, password, role }) => {
+  const hashPassword = md5(password);
+  const findByNameOrEmail = await user.findOne({ where: { name, email } });
+  if (findByNameOrEmail) return null;
+  const userRegister = await user.create({ name, email, password: hashPassword, role });
+
+  return userRegister;
+};
+
+module.exports = { register, registerByAdmin };

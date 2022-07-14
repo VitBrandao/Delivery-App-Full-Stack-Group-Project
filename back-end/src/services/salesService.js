@@ -11,4 +11,11 @@ const getSalesBySeller = async (id) => {
   return sales;
 };
 
-module.exports = { getSalesBySeller };
+const updateStatusSale = async (status, id) => {
+  const findSaleById = await sale.findByPk(id);
+  if (!findSaleById) return null;
+  await sale.update({ status }, { where: { id } });
+  return { ...findSaleById, status };
+};
+
+module.exports = { getSalesBySeller, updateStatusSale };

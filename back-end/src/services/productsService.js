@@ -1,8 +1,14 @@
 const { product } = require('../database/models');
 
-const productsService = async () => {
+const getAll = async () => {
   const allProducts = await product.findAll();
   return allProducts;
 };
 
-module.exports = productsService;
+const getById = async (id) => {
+  const productById = await product.findByPk(id);
+  if (!productById) return null;
+  return productById;
+};
+
+module.exports = { getAll, getById };

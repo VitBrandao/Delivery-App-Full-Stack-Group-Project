@@ -5,16 +5,38 @@ function LoginPage() {
     <div>
       <div>
         <div>
-          <label htmlFor="login">Login</label>
-          <input id="login" type="text" data-testid="common_login__input-email"/>
+          <label htmlFor="login">
+            Login
+            <input
+              id="login"
+              type="text"
+              data-testid="common_login__input-email"
+            />
+          </label>
         </div>
         <div>
-          <label htmlFor="password">Senha</label>
-          <input id="password" type="password" data-testid="common_login__input-password"/>
+          <label htmlFor="password">
+            Senha
+            <input
+              id="password"
+              type="password"
+              data-testid="common_login__input-password"
+            />
+          </label>
         </div>
         <div>
-          <button data-testid="common_login__button-login">login</button>
-          <button data-testid="common_login__button-register">Ainda não tenho conta</button>
+          <button
+            type="button"
+            data-testid="common_login__button-login"
+          >
+            login
+          </button>
+          <button
+            type="button"
+            data-testid="common_login__button-register"
+          >
+            Ainda não tenho conta
+          </button>
         </div>
         <p data-testid="common_login__element-invalid-email">Elemento oculto</p>
       </div>

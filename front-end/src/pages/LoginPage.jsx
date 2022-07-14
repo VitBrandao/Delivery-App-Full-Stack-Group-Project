@@ -31,12 +31,14 @@ function LoginPage() {
           >
             login
           </button>
-          <button
-            type="button"
-            data-testid="common_login__button-register"
-          >
-            Ainda não tenho conta
-          </button>
+          <div>
+            <button
+              type="button"
+              data-testid="common_login__button-register"
+            >
+              Ainda não tenho conta
+            </button>
+          </div>
         </div>
         <p data-testid="common_login__element-invalid-email">Elemento oculto</p>
       </div>

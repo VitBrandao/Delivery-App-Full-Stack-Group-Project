@@ -1,5 +1,4 @@
-const { sale } = require('../database/models');
-const { salesProduct } = require('../database/models');
+const { sale, user, salesProduct } = require('../database/models');
 
 const salesService = async ({ 
   userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, saleDate, status, products }) => {
@@ -13,4 +12,15 @@ const salesService = async ({
   return newSale.id;
 };
 
-module.exports = salesService;
+const getSalesBySeller = async (id) => {
+  const sales = await sale.findAll({ where: { sellerId: id } }, {
+    include: [
+      { 
+        model: user,
+      },
+    ],
+  });
+  return sales;
+};
+
+module.exports = { salesService, getSalesBySeller };

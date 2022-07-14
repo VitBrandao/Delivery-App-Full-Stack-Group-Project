@@ -1,6 +1,6 @@
 const { sale, user, salesProduct } = require('../database/models');
 
-const salesService = async ({ 
+const createSale = async ({ 
   userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, saleDate, status, products }) => {
   const newSale = await sale
     .create({ userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, saleDate, status });
@@ -23,4 +23,4 @@ const getSalesBySeller = async (id) => {
   return sales;
 };
 
-module.exports = { salesService, getSalesBySeller };
+module.exports = { createSale, getSalesBySeller };

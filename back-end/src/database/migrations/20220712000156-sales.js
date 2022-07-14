@@ -45,7 +45,13 @@ module.exports = {
       status: {
         type: Sequelize.STRING,
         allowNull: false,
-      }
+      },
+      createdAt: {
+        allowNull: true,
+        type: Sequelize.DATE,
+        field: 'sale_date',
+        defaultValue: Sequelize.fn('now'),
+      },
     });
   },
 

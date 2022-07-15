@@ -9,11 +9,12 @@ import CustomerDetailsPage from '../pages/CustomerDetailsPage';
 import SellerOrdersPage from '../pages/SellerOrdersPage';
 import SellerDetailsPage from '../pages/SellerDetailsPage';
 import AdminManagePage from '../pages/AdminManagePage';
+import Home from '../pages/Home';
 // import NotFound from '../pages/NotFound';
 
 const Routes = () => (
   <div>
-    <Route exact path="/" component={ LoginPage } />
+    <Route exact path="/" component={ Home } />
     <Route exact path="/login" component={ LoginPage } />
     <Route exact path="/register" component={ RegisterPage } />
     <Route exact path="/customer/products" component={ CustomerProductsPage } />

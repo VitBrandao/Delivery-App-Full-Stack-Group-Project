@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import fechPostLogin from '../helpers/login/postLogin';
+import fechPostLogin from '../helpers/postLogin';
 
 function LoginPage() {
   const [login, setLogin] = useState({
@@ -12,31 +12,31 @@ function LoginPage() {
 
   const history = useHistory();
 
-  const validateEmail = (email, password) => {
-    const SIX = 5;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    const validEmail = emailRegex.test(email);
-    const validPassword = password.length >= SIX;
-
-    if (validEmail && validPassword) {
-      setButtonDisabled(false);
-    } else {
-      setButtonDisabled(true);
-    }
-  };
+  useEffect(() => {
+    const validateEmail = (email, password) => {
+      const SIX = 6;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const validEmail = emailRegex.test(email);
+      const validPassword = password.length >= SIX;
+      if (validEmail && validPassword) {
+        setButtonDisabled(false);
+      } else {
+        setButtonDisabled(true);
+      }
+    };
+    validateEmail(login.email, login.password);
+  });
 
   const handleChange = ({ target: { name, value } }) => {
     setLogin({
       ...login,
       [name]: value,
     });
-    validateEmail(login.email, login.password);
   };
 
   const postLogin = async () => {
     const fetch = await fechPostLogin(login);
-    console.log(fetch);
+
     if (fetch.message) {
       setMessageError(fetch.message);
     }

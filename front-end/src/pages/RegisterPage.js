@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import fetchRegister from '../util/fetchRegister';
 
 function RegisterPage() {
   const [register, setRegister] = React.useState({
@@ -6,10 +7,36 @@ function RegisterPage() {
     email: '',
     password: '',
   });
+  const [buttonDisable, setButtonDisabled] = React.useState(true);
 
   function handleInput({ target: { name, value } }) {
     setRegister({ ...register, [name]: value });
   }
+
+  useEffect(() => {
+    validateEmail(register)
+  })
+
+  const registerUser = async () => {
+    const registerFetch = await fetchRegister(register);
+    console.log(registerFetch);
+    return registerFetch
+  }
+
+  
+
+  const validateEmail = ({ email, password, name }) => {
+    const validName = name.length > 12;
+    const SIX = 6;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const validEmail = emailRegex.test(email);
+    const validPassword = password.length >= SIX;
+    if (validEmail && validPassword && validName) {
+    setButtonDisabled(false);
+    } else {
+    setButtonDisabled(true);
+    }
+    }; 
 
   return (
     <div>
@@ -52,6 +79,8 @@ function RegisterPage() {
       <button
         data-testid="common_register__button-register"
         type="button"
+        disabled={ buttonDisable }
+        onClick={ registerUser }
       >
         CADASTRAR
       </button>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import fechPostLogin from '../helpers/postLogin';
+import fetchPostLogin from '../helpers/postLogin';
+import { setItemLocalStorage } from '../helpers/localStorage';
 
 function LoginPage() {
   const [login, setLogin] = useState({
@@ -35,19 +36,19 @@ function LoginPage() {
   };
 
   const postLogin = async () => {
-    const fetch = await fechPostLogin(login);
+    const response = await fetchPostLogin(login);
 
-    if (fetch.message) {
-      setMessageError(fetch.message);
+    if (response.message) {
+      setMessageError(response.message);
     }
-
-    if (fetch.role === 'administrator') {
+    setItemLocalStorage(response);
+    if (response.role === 'administrator') {
       history.push('/admin/manage');
     }
-    if (fetch.role === 'seller') {
+    if (response.role === 'seller') {
       history.push('/seller/orders');
     }
-    if (fetch.role === 'customer') {
+    if (response.role === 'customer') {
       history.push('/customer/products');
     }
   };

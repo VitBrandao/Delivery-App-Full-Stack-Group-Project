@@ -1,4 +1,4 @@
-const fechPostLogin = (body) => {
+const fetchPostLogin = (body) => {
   const fetchLogin = fetch('http://localhost:3001/login', {
     method: 'POST',
     body: JSON.stringify(body),
@@ -11,4 +11,4 @@ const fechPostLogin = (body) => {
   return fetchLogin;
 };
 
-export default fechPostLogin;
+export default fetchPostLogin;

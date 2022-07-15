@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import fetchRegister from '../util/fetchRegister';
 
 function RegisterPage() {
@@ -8,35 +9,40 @@ function RegisterPage() {
     password: '',
   });
   const [buttonDisable, setButtonDisabled] = React.useState(true);
+  const [messageError, setMessageError] = React.useState('');
+
+  const history = useHistory();
 
   function handleInput({ target: { name, value } }) {
     setRegister({ ...register, [name]: value });
   }
 
-  useEffect(() => {
-    validateEmail(register)
-  })
-
-  const registerUser = async () => {
-    const registerFetch = await fetchRegister(register);
-    console.log(registerFetch);
-    return registerFetch
-  }
-
-  
-
   const validateEmail = ({ email, password, name }) => {
-    const validName = name.length > 12;
+    const TWELVE = 12;
+    const validName = name.length > TWELVE;
     const SIX = 6;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const validEmail = emailRegex.test(email);
     const validPassword = password.length >= SIX;
     if (validEmail && validPassword && validName) {
-    setButtonDisabled(false);
+      setButtonDisabled(false);
     } else {
-    setButtonDisabled(true);
+      setButtonDisabled(true);
     }
-    }; 
+  };
+
+  useEffect(() => {
+    validateEmail(register);
+  });
+
+  const registerUser = async () => {
+    const registerFetch = await fetchRegister(register);
+    if (registerFetch.message) {
+      setMessageError(registerFetch.message);
+    } else {
+      history.push('/customer/products');
+    }
+  };
 
   return (
     <div>
@@ -84,6 +90,12 @@ function RegisterPage() {
       >
         CADASTRAR
       </button>
+      <span
+        data-data-testid="common_register__element-invalid_register"
+        style={ messageError.length > 0 ? { opacity: 1 } : { opacity: 0 } }
+      >
+        { messageError }
+      </span>
     </div>
   );
 }

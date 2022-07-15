@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import fechPostLogin from '../helpers/login/postLogin';
 
 function LoginPage() {
   const [login, setLogin] = useState({
     email: '',
     password: '',
   });
-
   const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [messageError, setMessageError] = useState('');
+
+  const history = useHistory();
 
   const validateEmail = (email, password) => {
     const SIX = 5;
@@ -28,6 +32,24 @@ function LoginPage() {
       [name]: value,
     });
     validateEmail(login.email, login.password);
+  };
+
+  const postLogin = async () => {
+    const fetch = await fechPostLogin(login);
+    console.log(fetch);
+    if (fetch.message) {
+      setMessageError(fetch.message);
+    }
+
+    if (fetch.role === 'administrator') {
+      history.push('/admin/manage');
+    }
+    if (fetch.role === 'seller') {
+      history.push('/seller/orders');
+    }
+    if (fetch.role === 'customer') {
+      history.push('/customer/products');
+    }
   };
 
   return (
@@ -64,6 +86,7 @@ function LoginPage() {
             type="button"
             data-testid="common_login__button-login"
             disabled={ buttonDisabled }
+            onClick={ postLogin }
           >
             login
           </button>
@@ -76,7 +99,12 @@ function LoginPage() {
             </button>
           </div>
         </div>
-        <p data-testid="common_login__element-invalid-email">Elemento oculto</p>
+        <span
+          data-testid="common_login__element-invalid-email"
+          style={ messageError.length > 0 ? { opacity: 1 } : { opacity: 0 } }
+        >
+          {messageError}
+        </span>
       </div>
     </div>
   );

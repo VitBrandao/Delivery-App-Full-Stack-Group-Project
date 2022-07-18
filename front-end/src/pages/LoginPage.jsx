@@ -52,6 +52,10 @@ function LoginPage() {
     }
   };
 
+  const redirectToRegister = () => {
+    history.push('/register');
+  };
+
   return (
     <div>
       <div>
@@ -94,6 +98,7 @@ function LoginPage() {
             <button
               type="button"
               data-testid="common_login__button-register"
+              onClick={ redirectToRegister }
             >
               Ainda não tenho conta
             </button>

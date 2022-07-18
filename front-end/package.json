@@ -15,10 +15,11 @@
     "test:coverage": "react-scripts test --coverage --watchAll=false",
     "test:coverage:json": "react-scripts test --coverage --coverageReporters=\"json-summary\" --watchAll=false --testFailureExitCode=0 --detectOpenHandles --runInBand --forceExit",
     "eject": "react-scripts eject",
-    "lint": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json .",
+    "lint": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json . --ext .js --ext .jsx",
     "lint:styles": "stylelint **/*.css --config .stylelintrc.json --ignore-disables --allow-empty-input"
   },
   "dependencies": {
+    "@babel/eslint-parser": "^7.18.2",
     "@testing-library/jest-dom": "5.16.2",
     "@testing-library/react": "12.1.4",
     "@testing-library/user-event": "13.5.0",
@@ -30,6 +31,9 @@
     "web-vitals": "2.1.4"
   },
   "devDependencies": {
+    "@babel/preset-react": "^7.18.6",
+    "eslint": "^8.20.0",
+    "eslint-config-airbnb": "^19.0.4",
     "eslint-config-trybe-frontend": "1.2.3",
     "eslint-plugin-react-redux": "^4.0.0",
     "eslint-plugin-sonarjs": "^0.13.0",

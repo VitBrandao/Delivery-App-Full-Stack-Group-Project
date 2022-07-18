@@ -82,7 +82,7 @@ function RegisterPage() {
         CADASTRAR
       </button>
       <span
-        data-data-testid="common_register__element-invalid_register"
+        data-testid="common_register__element-invalid_register"
         style={ messageError.length > 0 ? { opacity: 1 } : { opacity: 0 } }
       >
         { messageError }

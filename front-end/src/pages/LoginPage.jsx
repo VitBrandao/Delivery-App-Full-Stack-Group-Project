@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import fechPostLogin from '../helpers/postLogin';
+import fechPostLogin from '../helpers/post';
 
 function LoginPage() {
   const [login, setLogin] = useState({
@@ -35,7 +35,7 @@ function LoginPage() {
   };
 
   const postLogin = async () => {
-    const fetch = await fechPostLogin(login);
+    const fetch = await fechPostLogin(login, 'login');
 
     if (fetch.message) {
       setMessageError(fetch.message);

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import fetchRegister from '../util/fetchRegister';
+import fetchRegister from '../helpers/post';
 
 function RegisterPage() {
   const [register, setRegister] = React.useState({
@@ -36,7 +36,7 @@ function RegisterPage() {
   });
 
   const registerUser = async () => {
-    const registerFetch = await fetchRegister(register);
+    const registerFetch = await fetchRegister(register, 'register');
     if (registerFetch.message) {
       setMessageError(registerFetch.message);
     } else {

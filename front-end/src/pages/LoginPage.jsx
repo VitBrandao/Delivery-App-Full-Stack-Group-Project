@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import fechPostLogin from '../helpers/post';
+import { validateEmailAndPassword } from '../helpers/validateEmailAndPassword';
 
 function LoginPage() {
   const [login, setLogin] = useState({
@@ -13,19 +14,8 @@ function LoginPage() {
   const history = useHistory();
 
   useEffect(() => {
-    const validateEmail = (email, password) => {
-      const SIX = 6;
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      const validEmail = emailRegex.test(email);
-      const validPassword = password.length >= SIX;
-      if (validEmail && validPassword) {
-        setButtonDisabled(false);
-      } else {
-        setButtonDisabled(true);
-      }
-    };
-    validateEmail(login.email, login.password);
-  });
+    setButtonDisabled(validateEmailAndPassword(login.email, login.password));
+  }, [login]);
 
   const handleChange = ({ target: { name, value } }) => {
     setLogin({
@@ -40,7 +30,6 @@ function LoginPage() {
     if (fetch.message) {
       setMessageError(fetch.message);
     }
-
     if (fetch.role === 'administrator') {
       history.push('/admin/manage');
     }

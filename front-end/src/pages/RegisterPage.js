@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import fetchRegister from '../helpers/post';
+import { validateRegister } from '../helpers/validateEmailAndPassword';
 
 function RegisterPage() {
   const [register, setRegister] = React.useState({
@@ -18,17 +19,7 @@ function RegisterPage() {
   }
 
   const validateEmail = ({ email, password, name }) => {
-    const TWELVE = 12;
-    const validName = name.length > TWELVE;
-    const SIX = 6;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const validEmail = emailRegex.test(email);
-    const validPassword = password.length >= SIX;
-    if (validEmail && validPassword && validName) {
-      setButtonDisabled(false);
-    } else {
-      setButtonDisabled(true);
-    }
+    setButtonDisabled(validateRegister(name, email, password));
   };
 
   useEffect(() => {

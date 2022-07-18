@@ -12,8 +12,8 @@ import AdminManagePage from '../pages/AdminManagePage';
 import Home from '../pages/Home';
 // import NotFound from '../pages/NotFound';
 
-const Routes = () => {
-  (
+function Routes() {
+  return (
     <div>
       <Route exact path="/" component={ Home } />
       <Route exact path="/login" component={ LoginPage } />
@@ -21,13 +21,17 @@ const Routes = () => {
       <Route exact path="/customer/products" component={ CustomerProductsPage } />
       <Route exact path="/customer/checkout" component={ CustomerCheckoutPage } />
       <Route exact path="/customer/orders" component={ CustomerOrdersPage } />
-      <Route exact path="/customer/orders/:id" component={ CustomerDetailsPage } />
+      <Route
+        exact
+        path="/customer/orders/:id"
+        component={ CustomerDetailsPage }
+      />
       <Route exact path="/seller/orders" component={ SellerOrdersPage } />
       <Route exact path="/seller/orders/:id" component={ SellerDetailsPage } />
       <Route exact path="/admin/manage" component={ AdminManagePage } />
       {/* <Route exact path="*" component={ NotFound } /> */}
     </div>
   );
-};
+}
 
 export default Routes;

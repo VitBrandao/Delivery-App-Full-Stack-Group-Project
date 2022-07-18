@@ -12,7 +12,7 @@ const validateEmailAndPassword = (email, password) => {
 
 const validateRegister = (name, email, password) => {
   const TWELVE = 12;
-  const validName = name.length > TWELVE;
+  const validName = name.length >= TWELVE;
   if (validName) {
     return validateEmailAndPassword(email, password);
   }

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import fetchRegister from '../util/fetchRegister';
+import fetchRegister from '../helpers/api/requests';
+import { validateRegister } from '../helpers/validate/validateEmailAndPassword';
 
 function RegisterPage() {
   const [register, setRegister] = React.useState({
@@ -18,17 +19,7 @@ function RegisterPage() {
   }
 
   const validateEmail = ({ email, password, name }) => {
-    const TWELVE = 12;
-    const validName = name.length > TWELVE;
-    const SIX = 6;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const validEmail = emailRegex.test(email);
-    const validPassword = password.length >= SIX;
-    if (validEmail && validPassword && validName) {
-      setButtonDisabled(false);
-    } else {
-      setButtonDisabled(true);
-    }
+    setButtonDisabled(validateRegister(name, email, password));
   };
 
   useEffect(() => {
@@ -36,7 +27,7 @@ function RegisterPage() {
   });
 
   const registerUser = async () => {
-    const registerFetch = await fetchRegister(register);
+    const registerFetch = await fetchRegister(register, 'register');
     if (registerFetch.message) {
       setMessageError(registerFetch.message);
     } else {
@@ -91,7 +82,7 @@ function RegisterPage() {
         CADASTRAR
       </button>
       <span
-        data-data-testid="common_register__element-invalid_register"
+        data-testid="common_register__element-invalid_register"
         style={ messageError.length > 0 ? { opacity: 1 } : { opacity: 0 } }
       >
         { messageError }

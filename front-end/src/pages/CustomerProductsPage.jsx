@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
-import Header from "../components/Header";
-import { getItemLocalStorage } from "../helpers/localStorage";
-import Card from "../components/Card";
-import { getAll } from "../helpers/api/requests";
+import React, { useState, useEffect } from 'react';
+import Header from '../components/Header';
+import { getItemLocalStorage } from '../helpers/localStorage';
+import Card from '../components/Card';
+import { getAll } from '../helpers/api/requests';
 
 function CustomerProductsPage() {
   const [dataUser, setDataUser] = useState({
-    name: "",
-    email: "",
-    role: "",
-    token: "",
+    name: '',
+    email: '',
+    role: '',
+    token: '',
   });
   const [products, setProducts] = useState([]);
 
@@ -22,7 +22,7 @@ function CustomerProductsPage() {
     const response = await getAll('products');
     console.log(response);
     setProducts(response);
-  }
+  };
 
   useEffect(() => {
     catchDataUser();
@@ -34,11 +34,18 @@ function CustomerProductsPage() {
       <Header
         buttonOne="Produtos"
         buttonTwo="Meus Pedidos"
-        role={dataUser.role}
-        name={dataUser.name}
+        role={ dataUser.role }
+        name={ dataUser.name }
       />
-
-
+      {products.map((product) => (
+        <Card
+          key={ product.id }
+          price={ product.price }
+          name={ product.name }
+          image={ product.urlImage }
+          id={ product.id }
+        />
+      ))}
     </div>
   );
 }

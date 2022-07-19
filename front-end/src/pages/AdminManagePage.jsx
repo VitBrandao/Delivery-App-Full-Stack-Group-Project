@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import fetchPost from '../helpers/api/requests';
 import { validateRegister } from '../helpers/validate/validateEmailAndPassword';
+import { getItemLocalStorage } from '../helpers/localStorage';
 
 function AdminManagePage() {
   const [newUser, setNewUser] = useState({
@@ -12,10 +13,22 @@ function AdminManagePage() {
   });
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const [messageError, setMessageError] = useState('');
+  const [dataUser, setDataUser] = useState({
+    name: '', email: '', role: '', token: '',
+  });
+
+  const catchDataUser = () => {
+    const data = getItemLocalStorage();
+    setDataUser(data);
+  };
 
   const validateEmail = ({ email, password, name }) => {
     setButtonDisabled(validateRegister(name, email, password));
   };
+
+  useEffect(() => {
+    catchDataUser();
+  }, []);
 
   useEffect(() => {
     validateEmail(newUser);
@@ -26,13 +39,17 @@ function AdminManagePage() {
   };
 
   const registerNewUser = async () => {
-    const sendNewUser = await fetchPost(newUser, 'admin/manage');
+    const sendNewUser = await fetchPost(newUser, 'admin/manage', dataUser.token);
     if (sendNewUser.message) setMessageError(sendNewUser.message);
   };
 
   return (
     <div>
-      <Header textOne="Gerenciar Usuários" />
+      <Header
+        buttonOne="Gerenciar Usuários"
+        role={ dataUser.role }
+        name={ dataUser.name }
+      />
       <form>
         <label htmlFor="admin-input-name">
           Nome

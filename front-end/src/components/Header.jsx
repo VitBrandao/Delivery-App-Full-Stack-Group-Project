@@ -1,58 +1,47 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { getItemLocalStorage } from '../helpers/localStorage';
 
-function Header({ textOne, textTwo }) {
-  const [dataUser, setDataUser] = useState({
-    name: '', email: '', role: '', token: '',
-  });
-
-  const catchDataUser = () => {
-    const data = getItemLocalStorage();
-    setDataUser(data);
-  };
-
-  useEffect(() => {
-    catchDataUser();
-  }, []);
-
+function Header({ buttonOne, buttonTwo, role, name }) {
   return (
     <header>
       <button
         type="button"
         data-testid="customer_products__element-navbar-link-orders"
       >
-        { textOne }
+        { buttonOne }
       </button>
       {
-        dataUser.role === 'customer' && (
+        role === 'customer' && (
           <button
             type="button"
             data-testid="customer_products__element-navbar-link-orders"
           >
-            { textTwo }
+            { buttonTwo }
           </button>
         )
       }
       <span data-testid="customer_products__element-navbar-user-full-name">
-        { dataUser.name }
+        { name }
       </span>
-      <button
-        type="button"
+      <Link
+        to="/login"
         data-testid="customer_products__element-navbar-link-logout"
       >
         Sair
-      </button>
+      </Link>
     </header>
   );
 }
 
 Header.defaultProps = {
-  textTwo: '',
+  buttonTwo: '',
 };
 Header.propTypes = {
-  textOne: PropTypes.string.isRequired,
-  textTwo: PropTypes.string,
+  buttonOne: PropTypes.string.isRequired,
+  buttonTwo: PropTypes.string,
+  role: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
 };
 
 export default Header;

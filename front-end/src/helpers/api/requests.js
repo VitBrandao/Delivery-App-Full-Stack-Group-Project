@@ -1,8 +1,11 @@
-const fetchPost = (body, route) => {
+const fetchPost = (body, route, token) => {
   const fetchRoute = fetch(`http://localhost:3001/${route}`, {
     method: 'POST',
     body: JSON.stringify(body),
-    headers: { 'Content-type': 'application/json; charset=UTF-8' },
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+      Authorization: token,
+    },
   })
     .then((response) => response.json())
     .then((data) => data)

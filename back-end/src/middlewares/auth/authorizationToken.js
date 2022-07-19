@@ -1,23 +1,20 @@
 const jwt = require('jsonwebtoken');
-const path = require('path');
 const { readFileSync } = require('fs');
-const generateToken = require('../../services/generateToken');
 
-const validateToken = async () => {
-  const keyPath = path.resolve(__dirname, '..', '..', 'jwt.evaluation.key');
-  const secretKey = readFileSync(keyPath, 'utf-8');
+const validateToken = async (req, res, next) => {
+  const secretKey = readFileSync('jwt.evaluation.key', 'utf-8');
 
-  if (!generateToken) return { message: 'Token not found' };
-  
-  let notAuthorized = false;
-  
-  jwt.verify(generateToken, secretKey, (err) => {
-    if (err) notAuthorized = true;
-  });
+  const { authorization } = req.headers;
 
-  if (notAuthorized === true) return { message: 'Expired or invalid token' };
-
-  return 'Authorized!';
+  if (!authorization) return res.status(404).json({ message: 'Token not found' });
+  try {
+    const decoded = jwt.verify(authorization, secretKey);
+    req.user = decoded;
+    next();
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
+  }  
 };
 
 module.exports = validateToken;

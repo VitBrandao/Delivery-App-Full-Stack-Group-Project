@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import fetchRegister from '../helpers/post';
-import { validateRegister } from '../helpers/validateEmailAndPassword';
+import fetchRegister from '../helpers/api/requests';
+import { validateRegister } from '../helpers/validate/validateEmailAndPassword';
 
 function RegisterPage() {
   const [register, setRegister] = React.useState({

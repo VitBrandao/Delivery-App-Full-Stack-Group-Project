@@ -4,10 +4,8 @@ const validateEmailAndPassword = (email, password) => {
   const validEmail = emailRegex.test(email);
   const validPassword = password.length >= SIX;
 
-  if (validEmail && validPassword) {
-    return false;
-  }
-  return true;
+  if (validEmail && validPassword) return false;
+  if (!validEmail || !validPassword) return true;
 };
 
 const validateRegister = (name, email, password) => {

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import fechPostLogin from '../helpers/post';
-import { validateEmailAndPassword } from '../helpers/validateEmailAndPassword';
+import { setItemLocalStorage } from '../helpers/localStorage';
+import { validateEmailAndPassword } from '../helpers/validate/validateEmailAndPassword';
+import fetchPostLogin from '../helpers/api/requests';
 
 function LoginPage() {
   const [login, setLogin] = useState({
@@ -25,18 +26,21 @@ function LoginPage() {
   };
 
   const postLogin = async () => {
-    const fetch = await fechPostLogin(login, 'login');
+    const response = await fetchPostLogin(login, 'login');
 
-    if (fetch.message) {
-      setMessageError(fetch.message);
+    if (response.message) {
+      setMessageError(response.message);
     }
-    if (fetch.role === 'administrator') {
+
+    setItemLocalStorage(response);
+
+    if (response.role === 'administrator') {
       history.push('/admin/manage');
     }
-    if (fetch.role === 'seller') {
+    if (response.role === 'seller') {
       history.push('/seller/orders');
     }
-    if (fetch.role === 'customer') {
+    if (response.role === 'customer') {
       history.push('/customer/products');
     }
   };

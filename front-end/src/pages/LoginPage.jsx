@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import fetchPostLogin from '../helpers/postLogin';
 import { setItemLocalStorage } from '../helpers/localStorage';
+import { validateEmailAndPassword } from '../helpers/validate/validateEmailAndPassword';
+import fetchPostLogin from '../helpers/api/requests';
 
 function LoginPage() {
   const [login, setLogin] = useState({
@@ -14,19 +15,8 @@ function LoginPage() {
   const history = useHistory();
 
   useEffect(() => {
-    const validateEmail = (email, password) => {
-      const SIX = 6;
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      const validEmail = emailRegex.test(email);
-      const validPassword = password.length >= SIX;
-      if (validEmail && validPassword) {
-        setButtonDisabled(false);
-      } else {
-        setButtonDisabled(true);
-      }
-    };
-    validateEmail(login.email, login.password);
-  });
+    setButtonDisabled(validateEmailAndPassword(login.email, login.password));
+  }, [login]);
 
   const handleChange = ({ target: { name, value } }) => {
     setLogin({
@@ -36,12 +26,14 @@ function LoginPage() {
   };
 
   const postLogin = async () => {
-    const response = await fetchPostLogin(login);
+    const response = await fetchPostLogin(login, 'login');
 
     if (response.message) {
       setMessageError(response.message);
     }
+
     setItemLocalStorage(response);
+
     if (response.role === 'administrator') {
       history.push('/admin/manage');
     }
@@ -51,6 +43,10 @@ function LoginPage() {
     if (response.role === 'customer') {
       history.push('/customer/products');
     }
+  };
+
+  const redirectToRegister = () => {
+    history.push('/register');
   };
 
   return (
@@ -95,6 +91,7 @@ function LoginPage() {
             <button
               type="button"
               data-testid="common_login__button-register"
+              onClick={ redirectToRegister }
             >
               Ainda não tenho conta
             </button>

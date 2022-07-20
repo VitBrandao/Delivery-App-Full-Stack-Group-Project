@@ -29,7 +29,7 @@ function Header({ buttonOne, buttonTwo, role, name, testId }) {
       </span>
 
       <Link
-        href="/login"
+        to="/login"
         data-testid="customer_products__element-navbar-link-logout"
         onClick={ () => removeItemLocalStorage('user') }
       >

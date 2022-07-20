@@ -1,4 +1,4 @@
-.App {
+/* .App {
   align-items: center;
   background: #0fa36b;
   color: #464646;
@@ -51,4 +51,25 @@
   100% {
     transform: rotate(-10deg);
   }
+} */
+
+/* CSS Customer Products Page */
+.productImage {
+  height: 150px;
+  width: 150px;
 }
+
+.customerProductsCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.allCustomerProducts {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  align-content: center;
+  justify-content: space-around;
+} 
+/* CSS Customer Products Page */

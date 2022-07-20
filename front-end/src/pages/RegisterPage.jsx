@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { fetchPost } from '../helpers/api/requests';
+import {setItemLocalStorage} from '../helpers/localStorage';
 import { validateRegister } from '../helpers/validate/validateEmailAndPassword';
 
 function RegisterPage() {
@@ -31,6 +32,7 @@ function RegisterPage() {
     if (registerFetch.message) {
       setMessageError(registerFetch.message);
     } else {
+      setItemLocalStorage('user', registerFetch);
       history.push('/customer/products');
     }
   };

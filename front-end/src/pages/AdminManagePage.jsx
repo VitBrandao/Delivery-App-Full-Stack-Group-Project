@@ -18,7 +18,7 @@ function AdminManagePage() {
   });
 
   const catchDataUser = () => {
-    const data = getItemLocalStorage();
+    const data = getItemLocalStorage('user');
     setDataUser(data);
   };
 

@@ -18,7 +18,7 @@ function CustomerProductsPage() {
   const [totalPrice, setTotalPrice] = useState(0);
 
   const catchDataUser = () => {
-    const data = getItemLocalStorage();
+    const data = getItemLocalStorage('user');
     setDataUser(data);
   };
 

@@ -1,8 +1,12 @@
-export function setItemLocalStorage(dataUser) {
-  localStorage.setItem('dataUser', JSON.stringify(dataUser));
+export function setItemLocalStorage(user) {
+  localStorage.setItem('user', JSON.stringify(user));
 }
 
 export function getItemLocalStorage() {
-  const getItem = localStorage.getItem('dataUser');
+  const getItem = localStorage.getItem('user');
   return JSON.parse(getItem);
+}
+
+export function removeItemLocalStorage(key) {
+  localStorage.removeItem(key);
 }

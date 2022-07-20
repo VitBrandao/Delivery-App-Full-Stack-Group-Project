@@ -1,9 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import Header from '../components/Header';
+import { getItemLocalStorage } from '../helpers/localStorage';
+import { setItemLocalStorage } from '../helpers/localStorage';
+import CheckoutOrders from '../components/CheckoutOrders';
+import DetailsDelivery from '../components/DetailsDelivery';
 
 function CustomerCheckoutPage() {
+  const [user, setUser] = useState({
+    name: '', email: '', role: '', token: '',
+    });
+
+    const catchDataUser = () => {
+      const user = getItemLocalStorage();
+      setUser(user);
+      }; 
+
+useEffect(() => {
+  catchDataUser();
+}, []);
+
   return (
     <div>
-      <h1>Customer Checkout Page</h1>
+      <Header
+      buttonOne='PRODUTOS'
+      buttonTwo='MEUS PEDIDOS'
+      role={ user.role }
+      name={ user.name } 
+      />
+      <CheckoutOrders />
+      <DetailsDelivery />
     </div>
   );
 }

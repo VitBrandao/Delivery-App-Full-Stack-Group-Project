@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function CheckoutOrders({ unitPrice, description, quantity, remove, subTotal, index }) {
+function CheckoutOrders({ unitPrice, description, quantity, subTotal, index }) {
   return(
     <div>
       <h1>Finalizar Pedido</h1>
@@ -23,9 +23,12 @@ function CheckoutOrders({ unitPrice, description, quantity, remove, subTotal, in
           <td data-testid={`customer_checkout__element-order-table-quantity-${index}`}>{ quantity }</td>
           <td data-testid={`customer_checkout__element-order-table-unit-price-${index}`}>{ unitPrice }</td>
           <td data-testid={`customer_checkout__element-order-table-sub-total-${index}`}>{ subTotal }</td>
-          <td data-testid={`customer_checkout__element-order-table-remove-${index}`}>{ remove }</td>
+          <td>
+            <button type="button" data-testid={`customer_checkout__element-order-table-remove-${index}`}>Remover Item</button>
+          </td>
         </tr>
         </tbody>
+        <p data-testid='customer_checkout__element-order-total-price'>Total: R$ 0</p>
       </table>
     </div>
   );
@@ -37,7 +40,6 @@ CheckoutOrders.propTypes = {
   unitPrice: PropTypes.string.isRequired,
   quantity: PropTypes.string.isRequired,
   subTotal: PropTypes.string.isRequired,
-  remove: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired
   }; 
 

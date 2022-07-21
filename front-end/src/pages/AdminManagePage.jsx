@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
-import fetchPost from '../helpers/api/requests';
+import { fetchPost } from '../helpers/api/requests';
 import { validateRegister } from '../helpers/validate/validateEmailAndPassword';
 import { getItemLocalStorage } from '../helpers/localStorage';
 

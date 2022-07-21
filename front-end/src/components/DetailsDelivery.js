@@ -1,6 +1,26 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { getAll } from "../helpers/api/requests";
 
 function DetailsDelivery() {
+  const [users, setUsers] = useState([]);
+
+/*  const catchDataUser = () => {
+const data = getItemLocalStorage();
+setDataUser(data);
+};*/
+
+const getUsers = async () => {
+const response = await getAll('users');
+console.log(response)
+  response.map((user) => (
+    if ( user.role === 'seller') return    setUsers(response);
+  ))
+};
+
+useEffect(() => {
+//catchDataUser();
+getUsers();
+}, []); 
 return(
 <div>
   <h1>Detalhes e Endereço para Entrega</h1>
@@ -9,7 +29,11 @@ return(
       P.Vendedora Responsável
       <select
       >
-        <option data-testid="customer_checkout__select-seller">????</option>
+        {
+          users.map((user) => (
+            <option data-testid="customer_checkout__select-seller">{user.name}</option>
+          ))
+        }
       </select>
     </label>
     <label htmlFor="input-address">

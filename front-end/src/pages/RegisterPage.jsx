@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { fetchPost } from '../helpers/api/requests';
-import {setItemLocalStorage} from '../helpers/localStorage';
+import { setItemLocalStorage } from '../helpers/localStorage';
 import { validateRegister } from '../helpers/validate/validateEmailAndPassword';
 
 function RegisterPage() {

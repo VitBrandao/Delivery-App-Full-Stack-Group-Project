@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
-import { getItemLocalStorage } from '../helpers/localStorage';
+import { setItemLocalStorage, getItemLocalStorage } from '../helpers/localStorage';
 import Card from '../components/Card';
 import { getAll } from '../helpers/api/requests';
 
@@ -17,6 +17,8 @@ function CustomerProductsPage() {
 
   const [totalPrice, setTotalPrice] = useState(0);
 
+  const [customerCart, setCustomerCart] = useState([]);
+
   const catchDataUser = () => {
     const data = getItemLocalStorage('user');
     setDataUser(data);
@@ -30,6 +32,7 @@ function CustomerProductsPage() {
   const history = useHistory();
 
   const redirectToCheckout = () => {
+    setItemLocalStorage('carrinho', customerCart);
     history.push('/customer/checkout');
   };
 
@@ -58,6 +61,8 @@ function CustomerProductsPage() {
             id={ product.id }
             totalPrice={ totalPrice }
             setTotalPrice={ setTotalPrice }
+            setCustomerCart={ setCustomerCart }
+            customerCart={ customerCart }
           />
         ))}
       </div>

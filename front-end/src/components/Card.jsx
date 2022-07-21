@@ -1,16 +1,37 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-function Card({ price, image, name, id, totalPrice, setTotalPrice }) {
+function Card({
+  price, image, name, id, totalPrice, setTotalPrice, setCustomerCart, customerCart,
+}) {
   const [quantity, setQuantity] = useState(0);
-  // const [customerCart, setCustomerCart] = useState([]);
+  const itemCard = { id, name, image, price };
   const TEN = 10;
+
+  const addtoCart = (repeatNumber) => {
+    const cart = [...customerCart];
+    for (let index = 1; index <= repeatNumber; index += 1) {
+      cart.push(itemCard);
+    }
+    setCustomerCart(cart);
+  };
+
+  const removeFromCart = (repeatNumber) => {
+    const cart = [...customerCart];
+    for (let index = 1; index <= repeatNumber; index += 1) {
+      const indexOfItem = customerCart.findIndex((itemCart) => itemCart.id === id);
+      cart.splice(indexOfItem, 1);
+    }
+    setCustomerCart(cart);
+  };
+
   const addItem = () => {
     const increase = (parseInt(quantity, TEN) + 1);
     setQuantity(increase);
 
     const addTotalPrice = totalPrice + parseFloat(price, TEN);
     setTotalPrice(addTotalPrice);
+    addtoCart(1);
   };
 
   const removeItem = () => {
@@ -23,18 +44,17 @@ function Card({ price, image, name, id, totalPrice, setTotalPrice }) {
       );
 
       setTotalPrice(subTotalPrice);
+      removeFromCart(1);
     }
   };
 
   const updateItem = ({ target }) => {
-    console.log(`quantity: ${quantity}`);
-    console.log(`value:${target.value}`);
-
-    const targetToNumber = parseFloat(target.value, TEN);
+    const targetToNumber = !target.value ? 0 : parseFloat(target.value, TEN);
     if (quantity < targetToNumber) {
       const difference = targetToNumber - quantity;
       const addTotalPrice = totalPrice + (difference * parseFloat(price, TEN));
       setTotalPrice(addTotalPrice);
+      addtoCart(difference);
     } else {
       const difference = quantity - targetToNumber;
       const subTotalPrice = totalPrice < 1 ? 0 : (
@@ -42,6 +62,7 @@ function Card({ price, image, name, id, totalPrice, setTotalPrice }) {
       );
 
       setTotalPrice(subTotalPrice);
+      removeFromCart(difference);
     }
 
     setQuantity(target.value);
@@ -102,6 +123,13 @@ Card.propTypes = {
   price: PropTypes.string.isRequired,
   totalPrice: PropTypes.number.isRequired,
   setTotalPrice: PropTypes.func.isRequired,
+  setCustomerCart: PropTypes.func.isRequired,
+  customerCart: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    image: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    price: PropTypes.string.isRequired,
+  })).isRequired,
 };
 
 export default Card;

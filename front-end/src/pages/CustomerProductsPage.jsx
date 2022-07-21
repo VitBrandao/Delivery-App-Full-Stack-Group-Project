@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import Header from '../components/Header';
 import { setItemLocalStorage, getItemLocalStorage } from '../helpers/localStorage';
-import Card from '../components/Card';
 import { getAll } from '../helpers/api/requests';
+import Header from '../components/Header';
+import Card from '../components/Card';
 
 function CustomerProductsPage() {
   const [dataUser, setDataUser] = useState({
@@ -12,6 +12,7 @@ function CustomerProductsPage() {
     role: '',
     token: '',
   });
+  const TEN = 10;
 
   const [products, setProducts] = useState([]);
 
@@ -36,10 +37,20 @@ function CustomerProductsPage() {
     history.push('/customer/checkout');
   };
 
+  const calculateTotalCard = () => {
+    const total = customerCart
+      .reduce((prev, current) => prev + parseFloat(current.price, TEN), 0);
+    setTotalPrice(total);
+  };
+
   useEffect(() => {
     catchDataUser();
     allProducts();
   }, []);
+
+  useEffect(() => {
+    calculateTotalCard();
+  }, [customerCart]);
 
   return (
     <div>
@@ -59,8 +70,6 @@ function CustomerProductsPage() {
             name={ product.name }
             image={ product.urlImage }
             id={ product.id }
-            totalPrice={ totalPrice }
-            setTotalPrice={ setTotalPrice }
             setCustomerCart={ setCustomerCart }
             customerCart={ customerCart }
           />

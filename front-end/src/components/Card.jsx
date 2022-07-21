@@ -3,42 +3,40 @@ import PropTypes from 'prop-types';
 
 function Card({ price, image, name, id, setCustomerCart, customerCart }) {
   const [quantity, setQuantity] = useState(0);
-  const itemCard = { id, name, image, price };
-  const TEN = 10;
 
-  useEffect(() => {
-    const itemQuatity = customerCart.filter((item) => item.id === id).length;
-    setQuantity(itemQuatity);
-  }, [customerCart]);
-
-  const addtoCart = (repeatNumber) => {
+  const changeCart = () => {
     const cart = [...customerCart];
-    for (let index = 1; index <= repeatNumber; index += 1) {
+    const searchItem = cart.find((itemCart) => itemCart.id === id);
+    const itemCard = {
+      id,
+      name,
+      image,
+      price,
+      quantity,
+      subTotal: quantity * parseFloat(price),
+    };
+
+    if (!searchItem) {
       cart.push(itemCard);
+    } else {
+      const indexOfItem = customerCart.findIndex((itemCart) => itemCart.id === id);
+      cart[indexOfItem] = itemCard;
     }
-    setCustomerCart(cart);
-  };
-
-  const removeFromCart = (repeatNumber) => {
-    const cart = [...customerCart];
-    for (let index = 1; index <= repeatNumber; index += 1) {
+    if (itemCard.quantity === 0) {
       const indexOfItem = customerCart.findIndex((itemCart) => itemCart.id === id);
       cart.splice(indexOfItem, 1);
     }
     setCustomerCart(cart);
   };
 
-  const updateItem = ({ target }) => {
-    const targetToNumber = !target.value ? 0 : parseFloat(target.value, TEN);
-    if (quantity < targetToNumber) {
-      const difference = targetToNumber - quantity;
-      addtoCart(difference);
-    } else {
-      const difference = quantity - targetToNumber;
-      removeFromCart(difference);
-    }
+  useEffect(() => {
+    console.log('update');
+    changeCart();
+  }, [quantity]);
 
-    setQuantity(target.value);
+  const updateItem = ({ target }) => {
+    const targetToNumber = !target.value ? 0 : parseFloat(target.value);
+    setQuantity(targetToNumber);
   };
 
   return (
@@ -61,7 +59,7 @@ function Card({ price, image, name, id, setCustomerCart, customerCart }) {
         <button
           type="button"
           data-testid={ `customer_products__button-card-rm-item-${id}` }
-          onClick={ () => removeFromCart(1) }
+          onClick={ () => setQuantity(quantity - 1) }
           disabled={ !quantity }
         >
           {' '}
@@ -79,7 +77,7 @@ function Card({ price, image, name, id, setCustomerCart, customerCart }) {
         <button
           type="button"
           data-testid={ `customer_products__button-card-add-item-${id}` }
-          onClick={ () => addtoCart(1) }
+          onClick={ () => setQuantity(quantity + 1) }
         >
           {' '}
           +

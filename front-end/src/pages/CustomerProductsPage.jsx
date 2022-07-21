@@ -12,13 +12,14 @@ function CustomerProductsPage() {
     role: '',
     token: '',
   });
-  const TEN = 10;
 
   const [products, setProducts] = useState([]);
 
   const [totalPrice, setTotalPrice] = useState(0);
 
   const [customerCart, setCustomerCart] = useState([]);
+
+  const history = useHistory();
 
   const catchDataUser = () => {
     const data = getItemLocalStorage('user');
@@ -30,8 +31,6 @@ function CustomerProductsPage() {
     setProducts(response);
   };
 
-  const history = useHistory();
-
   const redirectToCheckout = () => {
     setItemLocalStorage('carrinho', customerCart);
     history.push('/customer/checkout');
@@ -39,7 +38,7 @@ function CustomerProductsPage() {
 
   const calculateTotalCard = () => {
     const total = customerCart
-      .reduce((prev, current) => prev + parseFloat(current.price, TEN), 0);
+      .reduce((prev, current) => prev + parseFloat(current.subTotal), 0);
     setTotalPrice(total);
   };
 

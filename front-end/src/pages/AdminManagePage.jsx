@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
-import fetchPost from '../helpers/api/requests';
+import { fetchPost } from '../helpers/api/requests';
 import { validateRegister } from '../helpers/validate/validateEmailAndPassword';
 import { getItemLocalStorage } from '../helpers/localStorage';
 
@@ -18,7 +18,7 @@ function AdminManagePage() {
   });
 
   const catchDataUser = () => {
-    const data = getItemLocalStorage();
+    const data = getItemLocalStorage('user');
     setDataUser(data);
   };
 
@@ -78,7 +78,7 @@ function AdminManagePage() {
           <input
             name="password"
             id="admin-input-password"
-            type="text"
+            type="password"
             data-testid="admin_manage__input-password"
             value={ newUser.password }
             onChange={ handleChangeNewUser }

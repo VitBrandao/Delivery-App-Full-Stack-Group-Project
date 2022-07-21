@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import fetchRegister from '../helpers/api/requests';
+import { fetchPost } from '../helpers/api/requests';
+import { setItemLocalStorage } from '../helpers/localStorage';
 import { validateRegister } from '../helpers/validate/validateEmailAndPassword';
 
 function RegisterPage() {
@@ -27,10 +28,11 @@ function RegisterPage() {
   });
 
   const registerUser = async () => {
-    const registerFetch = await fetchRegister(register, 'register');
+    const registerFetch = await fetchPost(register, 'register');
     if (registerFetch.message) {
       setMessageError(registerFetch.message);
     } else {
+      setItemLocalStorage('user', registerFetch);
       history.push('/customer/products');
     }
   };

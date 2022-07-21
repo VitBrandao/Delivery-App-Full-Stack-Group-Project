@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { setItemLocalStorage } from '../helpers/localStorage';
 import { validateEmailAndPassword } from '../helpers/validate/validateEmailAndPassword';
-import fetchPostLogin from '../helpers/api/requests';
+import { fetchPost } from '../helpers/api/requests';
 
 function LoginPage() {
   const [login, setLogin] = useState({
@@ -26,13 +26,13 @@ function LoginPage() {
   };
 
   const postLogin = async () => {
-    const response = await fetchPostLogin(login, 'login');
+    const response = await fetchPost(login, 'login');
 
     if (response.message) {
       setMessageError(response.message);
     }
 
-    setItemLocalStorage(response);
+    setItemLocalStorage('user', response);
 
     if (response.role === 'administrator') {
       history.push('/admin/manage');

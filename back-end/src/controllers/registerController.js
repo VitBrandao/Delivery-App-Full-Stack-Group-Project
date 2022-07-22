@@ -10,8 +10,8 @@ const registerController = async (req, res, _next) => {
       return res.status(409).json({ message: 'User already exists' });
     }
 
-    const { email, name, role } = registerInfos;
-    return res.status(201).json({ name, email, role, token: token(email) });
+    const { id, email, name, role } = registerInfos;
+    return res.status(201).json({ id, name, email, role, token: token(email) });
   } catch (err) {
     return res.status(500).json(err);
   }

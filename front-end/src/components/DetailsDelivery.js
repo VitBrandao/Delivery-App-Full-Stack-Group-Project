@@ -4,11 +4,6 @@ import { getAll } from '../helpers/api/requests';
 function DetailsDelivery() {
   const [users, setUsers] = useState([]);
 
-  /*  const catchDataUser = () => {
-const data = getItemLocalStorage();
-setDataUser(data);
-}; */
-
   const getUsers = async () => {
     const response = await getAll('users');
     const filterSeller = response.filter((user) => (user.role === 'seller'));
@@ -16,9 +11,9 @@ setDataUser(data);
   };
 
   useEffect(() => {
-    // catchDataUser();
     getUsers();
   }, []);
+
   return (
     <div>
       <h1>Detalhes e Endereço para Entrega</h1>
@@ -52,12 +47,6 @@ setDataUser(data);
             type="text"
           />
         </label>
-        <button
-          data-testid="customer_checkout__button-submit-order"
-          type="button"
-        >
-          FINALIZAR PEDIDOS
-        </button>
       </form>
     </div>
   );

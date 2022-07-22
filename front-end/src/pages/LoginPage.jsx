@@ -32,7 +32,7 @@ function LoginPage() {
       setMessageError(response.message);
     }
 
-    setItemLocalStorage(response);
+    setItemLocalStorage('user', response);
 
     if (response.role === 'administrator') {
       history.push('/admin/manage');

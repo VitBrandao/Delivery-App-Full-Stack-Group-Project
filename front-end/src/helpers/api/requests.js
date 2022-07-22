@@ -14,14 +14,13 @@ const fetchPost = (body, route, token) => {
   return fetchRoute;
 };
 
-
 const getAll = (route) => {
   const fetchRoute = fetch(`http://localhost:3001/${route}`)
-  .then((response) => response.json())
-  .then((data) => data)
-  .catch((error) => console.log(error));
-  
-  return fetchRoute;
-  };
+    .then((response) => response.json())
+    .then((data) => data)
+    .catch((error) => console.log(error));
 
-export  { fetchPost, getAll };
+  return fetchRoute;
+};
+
+export { fetchPost, getAll };

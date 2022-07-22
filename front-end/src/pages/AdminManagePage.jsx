@@ -18,7 +18,7 @@ function AdminManagePage() {
   });
 
   const catchDataUser = () => {
-    const data = getItemLocalStorage();
+    const data = getItemLocalStorage('user');
     setDataUser(data);
   };
 
@@ -78,7 +78,7 @@ function AdminManagePage() {
           <input
             name="password"
             id="admin-input-password"
-            type="text"
+            type="password"
             data-testid="admin_manage__input-password"
             value={ newUser.password }
             onChange={ handleChangeNewUser }

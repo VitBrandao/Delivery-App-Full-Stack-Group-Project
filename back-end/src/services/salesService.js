@@ -30,8 +30,20 @@ const updateStatusSale = async (status, id) => {
   return { ...findSaleById, status };
 };
 
+const getSalesByUser = async (id) => {
+  const sales = await sale.findAll({ where: { userId: id } }, {
+    include: [
+      { 
+        model: user,
+      },
+    ],
+  });
+  return sales;
+}
+
 module.exports = { 
   createSale, 
   getSalesBySeller, 
   updateStatusSale,
+  getSalesByUser,
 };

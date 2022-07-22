@@ -59,6 +59,7 @@ function CustomerProductsPage() {
         role={ dataUser.role }
         name={ dataUser.name }
         testId="customer_products__element-navbar-link-products"
+        routeTwo="/customer/orders"
       />
 
       <div className="allCustomerProducts">

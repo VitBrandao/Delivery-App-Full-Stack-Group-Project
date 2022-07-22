@@ -29,8 +29,8 @@ function CustomerCheckoutPage() {
   }, [products]);
 
   const [deliveryInfo, setDeliveryInfo] = useState({
-    sellerName: '',
-    sellerId: '',
+    sellerName: 'Fulana Pereira',
+    sellerId: 2,
     address: '',
     number: '',
   });
@@ -67,9 +67,9 @@ function CustomerCheckoutPage() {
       deliveryNumber: deliveryInfo.number,
       status: 'Pendente',
       products: arrayProducts,
-    }, 'sales');
-
-    history.push(`customer/orders/${response}`);
+    }, 'sales', user.token);
+    console.log(response);
+    history.push(`orders/${response}`);
   };
 
   const handleInput = ({ target }) => {
@@ -112,9 +112,6 @@ function CustomerCheckoutPage() {
             value={ deliveryInfo.sellerName }
             name="sellerName"
           >
-            <option>
-              selecione um vendedor
-            </option>
             {
               sellers.map((seller) => (
                 <option

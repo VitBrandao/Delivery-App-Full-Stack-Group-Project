@@ -1,24 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-function CheckoutOrders({ products, setProducts }) {
-  const [totalPrice, setTotalPrice] = useState(0);
-
-  const calculateTotalCard = () => {
-    const total = products
-      .reduce((prev, current) => prev + parseFloat(current.subTotal), 0);
-    setTotalPrice(total);
-  };
-
+function CheckoutOrders({ products, setProducts, totalPrice }) {
   const deleteProduct = (index) => {
     const cloneArray = [...products];
     cloneArray.splice(index, 1);
     setProducts(cloneArray);
   };
-
-  useEffect(() => {
-    calculateTotalCard();
-  }, [products]);
 
   return (
     <div>
@@ -106,6 +94,7 @@ CheckoutOrders.propTypes = {
     quantity: PropTypes.number.isRequired,
   })).isRequired,
   setProducts: PropTypes.func.isRequired,
+  totalPrice: PropTypes.number.isRequired,
 };
 
 export default CheckoutOrders;

@@ -67,14 +67,14 @@ function CheckoutOrders({ products, setProducts }) {
                     `customer_checkout__element-order-table-unit-price-${index}`
                   }
                 >
-                  { product.price }
+                  { product.price.replace('.', ',') }
                 </td>
                 <td
                   data-testid={
                     `customer_checkout__element-order-table-sub-total-${index}`
                   }
                 >
-                  { product.subTotal.toFixed(2) }
+                  { product.subTotal.toFixed(2).replace('.', ',') }
                 </td>
                 <button
                   type="button"

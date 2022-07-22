@@ -20,11 +20,12 @@ function DetailsDelivery() {
       <form>
         <label htmlFor="select-seller">
           P.Vendedora Responsável
-          <select>
+          <select
+            data-testid="customer_checkout__select-seller"
+          >
             {
               users.map((user) => (
                 <option
-                  data-testid="customer_checkout__select-seller"
                   key={ user.id }
                 >
                   {user.name}

@@ -87,11 +87,11 @@ function CheckoutOrders({ products, setProducts }) {
             ))
           }
         </tbody>
+        <p>Total: R$</p>
         <p
           data-testid="customer_checkout__element-order-total-price"
         >
-          Total: R$
-          {totalPrice}
+          {totalPrice.toFixed(2).replace('.', ',')}
         </p>
       </table>
     </div>

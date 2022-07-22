@@ -39,7 +39,7 @@ const getSalesByUser = async (id) => {
     ],
   });
   return sales;
-}
+};
 
 module.exports = { 
   createSale, 

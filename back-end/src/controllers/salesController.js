@@ -51,7 +51,7 @@ const getSalesByUser = async (req, res) => {
     console.error(error);
     return res.status(500).end();
   }
-}
+};
 
 module.exports = { 
   createSale, 

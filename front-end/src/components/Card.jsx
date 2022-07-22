@@ -30,7 +30,6 @@ function Card({ price, image, name, id, setCustomerCart, customerCart }) {
   };
 
   useEffect(() => {
-    console.log('update');
     changeCart();
   }, [quantity]);
 

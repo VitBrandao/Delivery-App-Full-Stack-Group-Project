@@ -5,11 +5,11 @@ const getBySaleId = async (id) => {
     include: [
       { 
         model: sale,
-        as: 'sale',
+        as: 'sales',
       },
       {
         model: product,
-        as: 'product',
+        as: 'products',
       },
     ],
   });

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import { getAll } from '../helpers/api/requests';
 import { getItemLocalStorage } from '../helpers/localStorage';
@@ -21,6 +22,7 @@ function CustomerOrdersPage() {
   const getSales = async (id) => {
     const response = await getAll(`customer/orders/${id}`);
     setSales(response);
+    console.log(response);
   };
 
   const getUsers = async () => {
@@ -29,6 +31,11 @@ function CustomerOrdersPage() {
     const findUser = users.find((user) => user.email === data.email);
 
     getSales(findUser.id);
+  };
+
+  const history = useHistory();
+  const redirectToDetails = (id) => {
+    history.push(`/customer/orders/${id}`);
   };
 
   useEffect(() => {
@@ -47,7 +54,11 @@ function CustomerOrdersPage() {
         routeOne="/customer/products"
       />
       {sales.map((sale) => (
-        <div key={ sale.userId }>
+        <button
+          key={ sale.userId }
+          type="button"
+          onClick={ () => redirectToDetails(sale.id) }
+        >
           <div>
             <p> Pedido </p>
             <p data-testid={ `customer_orders__element-order-id-${sale.id}` }>
@@ -70,7 +81,7 @@ function CustomerOrdersPage() {
               {sale.totalPrice.replace('.', ',')}
             </p>
           </div>
-        </div>
+        </button>
       ))}
     </div>
   );

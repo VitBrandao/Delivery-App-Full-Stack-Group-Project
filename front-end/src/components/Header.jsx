@@ -1,14 +1,24 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { removeItemLocalStorage } from '../helpers/localStorage';
 
-function Header({ buttonOne, buttonTwo, role, name, testId }) {
+function Header({ buttonOne, buttonTwo, role, name, testId, routeOne, routeTwo }) {
+  const history = useHistory();
+  const redirectToOrders = () => {
+    history.push(routeTwo);
+  };
+
+  const redirectToProducts = () => {
+    history.push(routeOne);
+  };
+
   return (
     <header data-testid={ testId }>
       <button
         type="button"
         data-testid="customer_products__element-navbar-link-orders"
+        onClick={ redirectToProducts }
       >
         { buttonOne }
       </button>
@@ -18,6 +28,7 @@ function Header({ buttonOne, buttonTwo, role, name, testId }) {
           <button
             type="button"
             data-testid="customer_products__element-navbar-link-orders"
+            onClick={ redirectToOrders }
           >
             { buttonTwo }
           </button>
@@ -49,6 +60,8 @@ Header.propTypes = {
   role: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   testId: PropTypes.string.isRequired,
+  routeOne: PropTypes.string.isRequired,
+  routeTwo: PropTypes.string.isRequired,
 };
 
 export default Header;

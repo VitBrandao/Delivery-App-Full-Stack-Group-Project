@@ -7,5 +7,6 @@ const router = Router();
 router.post('/sales', authorizationToken, salesController.createSale);
 router.post('/seller/orders', salesController.getSalesBySeller);
 router.put('/sales/:id', salesController.updateStatusSale);
+router.get('/customer/orders/:id', salesController.getSalesByUser);
 
 module.exports = router;

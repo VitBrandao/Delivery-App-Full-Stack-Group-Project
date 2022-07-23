@@ -10,6 +10,7 @@ function CustomerOrdersPage() {
     email: '',
     role: '',
     token: '',
+    // id: '',
   });
 
   const [sales, setSales] = useState([]);
@@ -22,7 +23,6 @@ function CustomerOrdersPage() {
   const getSales = async (id) => {
     const response = await getAll(`customer/orders/${id}`);
     setSales(response);
-    console.log(response);
   };
 
   const getUsers = async () => {
@@ -33,6 +33,14 @@ function CustomerOrdersPage() {
     getSales(findUser.id);
   };
 
+  // Nova função
+  // const getUserSales = async () => {
+  //   const data = getItemLocalStorage('user'); // ou estado dataUser
+  //   const userId = data.id;
+  //   const response = await getAll(`customer/orders/${userId}`);
+  //   setSales(response);
+  // };
+
   const history = useHistory();
   const redirectToDetails = (id) => {
     history.push(`/customer/orders/${id}`);
@@ -40,7 +48,7 @@ function CustomerOrdersPage() {
 
   useEffect(() => {
     catchDataUser();
-    getUsers();
+    getUsers(); // getUserSales()
   }, []);
 
   return (

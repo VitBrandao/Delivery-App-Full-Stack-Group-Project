@@ -10,7 +10,7 @@ function CustomerOrdersPage() {
     email: '',
     role: '',
     token: '',
-    // id: '',
+    id: '',
   });
 
   const [sales, setSales] = useState([]);
@@ -20,26 +20,19 @@ function CustomerOrdersPage() {
     setDataUser(data);
   };
 
-  const getSales = async (id) => {
-    const response = await getAll(`customer/orders/${id}`);
+  const getUserSales = async () => {
+    const data = getItemLocalStorage('user'); // ou estado dataUser
+    const userId = data.id;
+    const response = await getAll(`customer/orders/${userId}`);
     setSales(response);
   };
 
-  const getUsers = async () => {
-    const users = await getAll('users');
-    const data = getItemLocalStorage('user');
-    const findUser = users.find((user) => user.email === data.email);
-
-    getSales(findUser.id);
+  const convertDate = (date) => {
+    const newDate = date.split(/[- :]/);
+    const day = newDate[2].slice(0, 2);
+    const convertedDate = `${day}/${newDate[1]}/${newDate[0]}`;
+    return convertedDate;
   };
-
-  // Nova função
-  // const getUserSales = async () => {
-  //   const data = getItemLocalStorage('user'); // ou estado dataUser
-  //   const userId = data.id;
-  //   const response = await getAll(`customer/orders/${userId}`);
-  //   setSales(response);
-  // };
 
   const history = useHistory();
   const redirectToDetails = (id) => {
@@ -48,7 +41,7 @@ function CustomerOrdersPage() {
 
   useEffect(() => {
     catchDataUser();
-    getUsers(); // getUserSales()
+    getUserSales();
   }, []);
 
   return (
@@ -63,14 +56,14 @@ function CustomerOrdersPage() {
       />
       {sales.map((sale) => (
         <button
-          key={ sale.userId }
+          key={ sale.id }
           type="button"
           onClick={ () => redirectToDetails(sale.id) }
         >
           <div>
             <p> Pedido </p>
             <p data-testid={ `customer_orders__element-order-id-${sale.id}` }>
-              {sale.deliveryNumber}
+              {`000${sale.id}`}
             </p>
           </div>
           <p data-testid={ `customer_orders__element-delivery-status-${sale.id}` }>
@@ -78,7 +71,7 @@ function CustomerOrdersPage() {
           </p>
 
           <p data-testid={ `customer_orders__element-order-date-${sale.id}` }>
-            {sale.saleDate}
+            {convertDate(sale.saleDate)}
           </p>
 
           <div>

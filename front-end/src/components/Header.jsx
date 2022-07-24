@@ -17,7 +17,7 @@ function Header({ buttonOne, buttonTwo, role, name, testId, routeOne, routeTwo }
     <header data-testid={ testId }>
       <button
         type="button"
-        data-testid="customer_products__element-navbar-link-orders"
+        data-testid="customer_products__element-navbar-link-products"
         onClick={ redirectToProducts }
       >
         { buttonOne }

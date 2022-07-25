@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
-import { getAll } from '../helpers/api/requests';
+import { fetchPost } from '../helpers/api/requests';
 import { getItemLocalStorage } from '../helpers/localStorage';
 
-function CustomerOrdersPage() {
+function SellerOrdersPage() {
   const [dataUser, setDataUser] = useState({
     name: '',
     email: '',
@@ -21,9 +21,11 @@ function CustomerOrdersPage() {
   };
 
   const getUserSales = async () => {
-    const data = getItemLocalStorage('user'); // ou estado dataUser
-    const userId = data.id;
-    const response = await getAll(`customer/orders/${userId}`);
+    const data = getItemLocalStorage('user');
+    const sellerId = data.id;
+    const sellerToken = data.token;
+    const response = await fetchPost({ id: sellerId }, 'seller/orders', sellerToken);
+    console.log(response);
     setSales(response);
   };
 
@@ -36,7 +38,7 @@ function CustomerOrdersPage() {
 
   const history = useHistory();
   const redirectToDetails = (id) => {
-    history.push(`/customer/orders/${id}`);
+    history.push(`/seller/orders/${id}`);
   };
 
   useEffect(() => {
@@ -47,12 +49,11 @@ function CustomerOrdersPage() {
   return (
     <div>
       <Header
-        buttonOne="Produtos"
-        buttonTwo="Meus Pedidos"
+        buttonOne="Pedidos"
+        routeOne="/seller/orders"
         role={ dataUser.role }
         name={ dataUser.name }
-        testId="customer_products__element-navbar-link-products"
-        routeOne="/customer/products"
+        testId="customer_products__element-navbar-link-orders"
       />
       {sales.map((sale) => (
         <button
@@ -62,15 +63,15 @@ function CustomerOrdersPage() {
         >
           <div>
             <p> Pedido </p>
-            <p data-testid={ `customer_orders__element-order-id-${sale.id}` }>
+            <p data-testid={ `seller_orders__element-order-id-${sale.id}` }>
               {`000${sale.id}`}
             </p>
           </div>
-          <p data-testid={ `customer_orders__element-delivery-status-${sale.id}` }>
+          <p data-testid={ `seller_orders__element-delivery-status-${sale.id}` }>
             {sale.status}
           </p>
 
-          <p data-testid={ `customer_orders__element-order-date-${sale.id}` }>
+          <p data-testid={ `seller_orders__element-order-date-${sale.id}` }>
             {convertDate(sale.saleDate)}
           </p>
 
@@ -78,14 +79,18 @@ function CustomerOrdersPage() {
             <p>
               R$
             </p>
-            <p data-testid={ `customer_orders__element-card-price-${sale.id}` }>
+            <p data-testid={ `seller_orders__element-card-price-${sale.id}` }>
               {sale.totalPrice.replace('.', ',')}
             </p>
           </div>
+
+          <p data-testid={ `seller_orders__element-card-address-${sale.id}` }>
+            {`${sale.deliveryAddress}, ${sale.deliveryNumber}`}
+          </p>
         </button>
       ))}
     </div>
   );
 }
 
-export default CustomerOrdersPage;
+export default SellerOrdersPage;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { setItemLocalStorage } from '../helpers/localStorage';
+import { getItemLocalStorage, setItemLocalStorage } from '../helpers/localStorage';
 import { validateEmailAndPassword } from '../helpers/validate/validateEmailAndPassword';
 import { fetchPost } from '../helpers/api/requests';
 
@@ -14,6 +14,30 @@ function LoginPage() {
 
   const history = useHistory();
 
+  const isUserLogged = () => {
+    const findUser = getItemLocalStorage('user');
+
+    if (findUser) {
+      const { role } = findUser;
+      if (role === 'administrator') {
+        history.push('/admin/manage');
+      }
+      if (role === 'seller') {
+        history.push('/seller/orders');
+      }
+      if (role === 'customer') {
+        history.push('/customer/products');
+      }
+    }
+  };
+
+  // componentDidMount
+  useEffect(() => {
+    isUserLogged();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // componentDidUpdate
   useEffect(() => {
     setButtonDisabled(validateEmailAndPassword(login.email, login.password));
   }, [login]);
